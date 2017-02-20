@@ -1,0 +1,169 @@
+@CHARSET "UTF-8";
+@CHARSET "UTF-8";
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+	outline-style: none;
+}
+body {
+	font: 12px Arial, Helvetica, Verdana, sans-serif;
+	color: #4f4e4e;
+	background-color: #DCDCDC;
+	text-align: center;
+	line-height: 14px;
+}
+ul {
+	list-style-type: none;
+}
+img {
+	border: 0;
+	overflow: hidden;
+	color: #666;
+}
+a {
+	color: #FF4F73;
+	text-decoration: none;
+}
+h2 {
+	color: #777;
+	font-size: 14px;
+	font-weight: normal;
+}
+.clear {
+	clear: both;
+}
+#header {
+	text-align: left;
+	margin: 0 auto;
+	padding: 15px 0;
+}
+#header-inner {
+}
+#wrapper {
+}
+#wrapper-inner {
+	text-align: left;
+	margin: 0 auto;
+	min-height: 700px;
+	_height: 700px;
+}
+#canvas {
+	background-color: #fff;
+	float: left;
+}
+#content {
+	padding: 20px 0 20px 0px;
+	position: relative;
+	background-color: #ffffff;
+}
+#logo {
+	float: left;
+}
+#logo a {
+	display: block;
+	height: 45px;
+	margin-top: 5px;
+	width: 160px;
+}
+#loggeduser {
+	float: right;
+	margin-top: 15px;
+
+}
+#loggeduser img {
+	width: 32px;
+	height: 32px;
+	float:left;
+	margin-right: 10px;
+}
+#loggeduser h2 {
+	margin: 0;
+	line-height: 1.1em;
+}
+#loggeduser h2 a {
+	font-size: 12px;
+	color: #4f4e4e;
+}
+#loggeduser h2 a:hover {
+	text-decoration: underline;
+}
+#loggeduser li {
+	font-size: 12px;
+	display: inline;
+	margin-right: 7px;
+}
+#loggeduser li a {
+	text-decoration: underline;
+}
+#pagination {
+	background-color: #EEEEEE;
+	clear: both;
+	font-weight: bold;
+
+}
+.pages {
+	padding: 14px 0;
+	text-align: center;
+}
+.pages a {
+	background: #fff none repeat scroll 0 0;
+	margin-right: 0.3em;
+	padding: 5px 7px;
+	border: 1px solid #9AAFE5;
+	cursor:pointer;
+	text-decoration: none;
+}
+.pages span {
+	margin-right: 0.3em;
+	padding: 5px 7px;
+}
+.pages span.current {
+	color: #fff;
+	background: #9AAFE5 none repeat scroll 0 0;
+	border: 1px solid #6495ED;
+}
+.pages span.dot {
+	color: #ff5f83;
+	background: #EEEEEE none repeat scroll 0 0;
+	border: 1px solid #EEEEEE;
+}
+.pages a:hover {
+	border-color: #ff5f83;
+	background: #ff5f83;
+	color: #fff;
+}
+.e {
+	float: left;
+	margin: 0 20px 20px 0;
+	position: relative;
+	display: inline;
+}
+
+.e .img {
+	display: block;
+}
+
+
+#loggeduser li *{
+/*cursor:pointer;*/
+z-index: 10000;
+}
+
+.catlog_left{
+	float:left;
+	padding-right: 0px;
+	padding-left: 0px;
+
+
+
+}
+
+.catlog_right{
+	float:right;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	background-color: #0;
+
+}

@@ -1,0 +1,68 @@
+$def with (inputdat)
+$ ImageSrcFolder = '/static/adult_gif'
+$ fils = os.listdir(os.getcwd()+ImageSrcFolder)#
+$ FilPerPage = 10
+$ BackFowrdNums = 3
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0040)file:///F:/work/linux/Sync/PhotoLib.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="keywords" content="FarFarAway&#39;photo library">
+<meta name="description" content="FarFarAway&#39;photo library">
+
+<title>PhotoLib</title>
+
+<link href="./static/PhotoLib/photolib.css" media="screen" rel="stylesheet" type="text/css">
+
+<link type="image/x-icon" rel="shortcut icon" href="http://wtear.com/photogallery/duola.jpg">
+<body huaban_collector_injected="true" mycollectionplug="bind" data-pinterest-extension-installed="cr1.39.1" >
+
+<div id="header">
+  <div id="header-inner">
+    <div style="text-align:left; margin:0 0 15px;"></div>
+    <div id="logo"><a href="http://www.wtear.com" ><img src="./static/PhotoLib/logo.png" data-pin-nopin="true"></a></div>
+    <div id="loggeduser">
+      <h2><a href="http://www.topit.me/feed"><img src="./static/PhotoLib/3MBAWJ3js.jpg" data-pin-nopin="true">lin2724</a></h2>
+      <ul>
+        <li><a href="http://www.wtear.com/">主页</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div id="wrapper">
+  <div id="wrapper-inner">
+    <div id="canvas">
+      <div id="content">
+        <div class="clear"></div>
+        <div class="catalog">
+          $ page = inputdat.pages[0]
+          $ FileCount = len(fils)
+          $for i in fils[int(page)*FilPerPage:(int(page)+1)*FilPerPage]:
+            $if i[-4:]==".jpg" or i[-4:]==".gif":
+              <div class="e m"><a target="_blank" ><img class="img ui-draggable" alt="untitled" width="245px"
+                src="$ImageSrcFolder/$i" style="position: relative;"></a></div>
+          <div class="clear"></div>
+          <div id="pagination">
+            <div class="pages">
+              <a href="/adultphotos?pages=0">0</a>
+              <span class="dot">...</span>
+              $for j in range (int(page)-BackFowrdNums,int(page)):
+                $if j>=0:
+                  <a href="/adultphotos?pages=$(tostr(j))">$(tostr(j))</a>
+              <span class="current">$(page)</span>
+              $for j in range(int(page)+1,int(page)+BackFowrdNums+1):
+                $if j < int(FileCount)/10-2:
+                  <a href="/adultphotos?pages=$(tostr(j))">$(tostr(j))</a>
+              <span class="dot">...</span><a href="/adultphotos?pages=$(tostr(int(FileCount)/10-2))">$(tostr(int(FileCount)/10))</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<a href="http:www.wtear.com"> Powerd by zzl 2016-1-9</a>
+</body></html>

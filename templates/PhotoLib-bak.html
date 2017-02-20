@@ -1,0 +1,88 @@
+$def with (inputdat)
+$ ImageSrcFolder = inputdat.ImgLib
+$ Suburl = inputdat.SubHref
+$ fils = os.listdir(os.getcwd()+ImageSrcFolder)
+$ FilPerPage = 30
+$ BackFowrdNums = 8
+$ PageWidth = 800
+$ GapWidth = 20
+$ ImgWidth = (PageWidth - GapWidth*3) /2
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0040)file:///F:/work/linux/Sync/PhotoLib.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="keywords" content="FarFarAway&#39;photo library">
+<meta name="description" content="FarFarAway&#39;photo library">
+
+<title>PhotoLib</title>
+
+<link href="/static/PhotoLib/photolib-cleaned.css" media="screen" rel="stylesheet" type="text/css">
+
+<link type="image/x-icon" rel="shortcut icon" href="http://wtear.com/photogallery/duola.jpg">
+<body huaban_collector_injected="true" mycollectionplug="bind" data-pinterest-extension-installed="cr1.39.1" >
+
+<a id="SideLeft" style="height:100%;width:60px;left:0;top:0px;position:fixed;background-color:bisque;" href="/$Suburl?pages=$((int)(inputdat.pages[0])-1)"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br><</span></a>
+<a id="SideLeft" style="height:100%;width:60px;right:0;top:0px;position:fixed;background-color:bisque;" href="/$Suburl?pages=$((int)(inputdat.pages[0])+1)"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br>›</span></a>
+<div id="AllWidth" style="width:$(PageWidth)px; margin: 0px auto;">
+<div id="header" style="height:20px;">
+  <div id="header-inner">
+    <div style="text-align:left; margin:0 0 15px;"></div>
+    <div id="logo"><a href="http://www.wtear.com" ><img src="/static/PhotoLib/logo.png" data-pin-nopin="true"></a></div>
+    <div id="loggeduser">
+      <h2><a href="http://www.wtear.com"><img src="/static/PhotoLib/3MBAWJ3js.jpg" data-pin-nopin="true">lin2724</a></h2>
+      <ul>
+        <li><a href="http://www.wtear.com/">主页</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div id="wrapper">
+  <div id="wrapper-inner">
+    <div id="canvas">
+      <div id="content" style="width:$(PageWidth)px;">
+        <div class="clear"></div>
+        <div class="catalog">
+          <div class="catlog_left" style="width:$(ImgWidth)px;margin-left:$(GapWidth)px">
+          $ page = inputdat.pages[0]
+          $ FileCount = len(fils)
+          $for i in fils[int(page)*FilPerPage:(int(page)+1)*FilPerPage-FilPerPage/2]:
+            $if i[-4:]==".jpg" or i[-4:]==".gif":
+              <div class="e m"><a target="_blank" href="/detail/$Suburl?name=$i[:-4]" ><img class="img ui-draggable" alt="untitled" width="$ImgWidth px"
+                src="$ImageSrcFolder/$i" style="position: relative;"></a></div>
+          </div>
+          <div class="catlog_right" style="width:$(ImgWidth)px;margin-right:$(GapWidth)px">
+          $ page = inputdat.pages[0]
+          $ FileCount = len(fils)
+          $for i in fils[int(page)*FilPerPage+FilPerPage/2:(int(page)+1)*FilPerPage]:
+            $if i[-4:]==".jpg" or i[-4:]==".gif":
+              <div class="e m"><a target="_blank" href="/detail/$Suburl?name=$i[:-4]" ><img class="img ui-draggable" alt="untitled" width="$ImgWidth px"
+                src="$ImageSrcFolder/$i" style="position: relative;"></a></div>
+          </div>
+          <div class="clear"></div>
+          <div id="pagination">
+            <div class="pages">
+              <a href="/$Suburl?pages=0">0</a>
+              <span class="dot">...</span>
+              $for j in range (int(page)-BackFowrdNums,int(page)):
+                $if j>=0:
+                  <a href="/$Suburl?pages=$(tostr(j))">$(tostr(j))</a>
+              <span class="current">$(page)</span>
+              $for j in range(int(page)+1,int(page)+BackFowrdNums+1):
+                $if j < int(FileCount)/10-2:
+                  <a href="/$Suburl?pages=$(tostr(j))">$(tostr(j))</a>
+              <span class="dot">...</span><a href="/$Suburl?pages=$(tostr(int(FileCount)/10-2))">$(tostr(int(FileCount)/10))</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<a href="http:www.wtear.com"> Powerd by zzl 2016-1-9</a>
+
+</div>
+
+</body></html>

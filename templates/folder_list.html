@@ -1,0 +1,29 @@
+$def with (inputdat)
+$ folder_list = inputdat.folder_list
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="keywords" content="FarFarAway&#39;photo library">
+<meta name="description" content="FarFarAway&#39;photo library">
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+
+<title>PhotoLib</title>
+
+<link href="/static/PhotoLib/photolib-cleaned.css" media="screen" rel="stylesheet" type="text/css">
+
+<link type="image/x-icon" rel="shortcut icon" href="http://wtear.com/photogallery/duola.jpg">
+<body huaban_collector_injected="true" mycollectionplug="bind" data-pinterest-extension-installed="cr1.39.1" >
+<div style="position: absolute; margin-top: 30%;width: 100%">
+$for folder in folder_list:
+    <a href="/photolib?ImgLib=$folder&&pages=0&&sync=n" style="line-height: 50px; font-size: 30px">$folder</a>
+    <br>
+</div>
+
+
+<a href="http:www.wtear.com"> Powerd by zzl 2016-1-9</a>
+
+</body></html>

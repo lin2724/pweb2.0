@@ -1,0 +1,19 @@
+$def with (imgid)
+<html>
+  <head>
+      <title>xxx of xxx perl #25</title>
+  </head>
+<body>
+
+$if imgid:
+  <h1>received id is $imgid</h1>
+  <h2>im gonna to show you img</h2>
+  $print "can we print something in console?"
+  $for img in imgid:
+    $ tmpurl = img+'.jpg'
+    <a><img src="/static/img/$tmpurl" width="50">this is a img</a>
+$else:
+  <em>no id!</em>
+
+</body>
+</html>

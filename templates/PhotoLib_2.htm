@@ -1,0 +1,51 @@
+$def with (inputdat)
+$ ImageSrcFolder = inputdat.ImgLib
+$ FileName = inputdat.name
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>wtear.com</title>
+<link href="/static/PhotoLib_2/main21.css" media="screen" rel="stylesheet" type="text/css" />
+<link type="image/x-icon" rel="shortcut icon" href="http://wtear.com/photogallery/duola.jpg" />
+<link type="text/css" rel="stylesheet" href="/topit_2_files/bdsstyle.css" />
+<link href="/topit_2_files/imgshare.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<iframe style="display: none;" frameborder="0"></iframe>
+<div style="display: block;" id="bdshare_s">
+  <iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe>
+  <div style="display: none;" id="bdshare_l">
+  </div>
+</div>
+<div id="header">
+  <div id="header-inner">
+    <div id="logo"><a href="http://www.wtear.com/"><img src="/static/PhotoLib_2/logo.png" /></a></div>
+    <div id="loggeduser">
+      <h2><a href="http://www.wtear.com/"><img src="/static/PhotoLib_2/3MBAWJ3js.jpeg" />lin2724</a></h2>
+      <ul>
+        <li><a href="http://www.wtear.com">主页</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<style>
+#mainbox{float:left;width:550px;}#canvasbox{background-color:#FFFFFF;}
+</style>
+<div id="wrapper">
+  <div id="wrapper-inner">
+    <div id="mainbox">
+      <div id="canvasbox">
+        <div id="content"><a rel="lightbox" id="item-tip"><img style="position: relative;" alt="untitle" src="static/$ImageSrcFolder/$FileName" width='500px' /></a>
+          <div style="padding-top: 5px;"><a href="static/$ImageSrcFolder/$FileName" download="" target="_blank"><i>下载原图</i></a></div>
+          <div id="comments"></div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+</body>
+</html>
