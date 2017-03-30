@@ -36,8 +36,8 @@ $ ImgWidth = (PageWidth - GapWidth*3) /2
 <link type="image/x-icon" rel="shortcut icon" href="http://wtear.com/photogallery/duola.jpg">
 <body huaban_collector_injected="true" mycollectionplug="bind" data-pinterest-extension-installed="cr1.39.1" >
 
-<a id="SideLeft" style="height:100%;width:60px;left:0;top:0px;position:fixed;background-color:bisque;" href="photolib?ImgLib=$ImageSrcFolder&&pages=$((int)(inputdat.pages[0])-1)&&sync=$NeedSync"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br><</span></a>
-<a id="SideRight" style="height:100%;width:60px;right:0;top:0px;position:fixed;background-color:bisque;" href="photolib?ImgLib=$ImageSrcFolder&&pages=$((int)(inputdat.pages[0])+1)&&sync=$NeedSync"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br>›</span></a>
+<a id="SideLeft" style="height:100%;width:60px;left:0;top:0px;position:fixed;background-color:bisque;" href="/photolib?ImgLib=$ImageSrcFolder&&pages=$((int)(inputdat.pages[0])-1)&&sync=$NeedSync"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br><</span></a>
+<a id="SideRight" style="height:100%;width:60px;right:0;top:0px;position:fixed;background-color:bisque;" href="/photolib?ImgLib=$ImageSrcFolder&&pages=$((int)(inputdat.pages[0])+1)&&sync=$NeedSync"><span style="display: inline;font-size:100px;"><br><br><br><br><br><br><br><br>›</span></a>
 <div id="AllWidth" style="width:$(PageWidth)px; margin: 0px auto;">
 <div id="header" style="height:20px;">
   <div id="header-inner">
@@ -67,7 +67,7 @@ $ ImgWidth = (PageWidth - GapWidth*3) /2
                       <a style="color: red; font-size: 80px; position: absolute; top: 40px; ">X</a>
                   </div>
                   <a target="_blank" href="/$Suburl?ImgLib=$ImageSrcFolder&&name=$i&&sync=$NeedSync" >
-                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="static/$ImageSrcFolder/$i" style="position: relative;">
+                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$i" style="position: relative;">
                   </a>
               </div>
           </div>
@@ -80,23 +80,23 @@ $ ImgWidth = (PageWidth - GapWidth*3) /2
                       <a style="color: red; font-size: 80px; position: absolute; top: 40px; ">X</a>
                   </div>
                   <a target="_blank" href="/$Suburl?ImgLib=$ImageSrcFolder&&name=$i&&sync=$NeedSync" >
-                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="static/$ImageSrcFolder/$i" style="position: relative;">
+                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$i" style="position: relative;">
                   </a>
               </div>
           </div>
           <div class="clear"></div>
           <div id="pagination">
             <div class="pages">
-              <a href="photolib?ImgLib=$ImageSrcFolder&&pages=0">0</a>
+              <a href="/photolib?ImgLib=$ImageSrcFolder&&pages=0">0</a>
               <span class="dot">...</span>
               $for j in range (int(page)-BackFowrdNums,int(page)):
                 $if j>=0:
-                  <a href="photolib?ImgLib=$ImageSrcFolder&&pages=$(tostr(j))&&sync=$NeedSync">$(tostr(j))</a>
+                  <a href="/photolib?ImgLib=$ImageSrcFolder&&pages=$(tostr(j))&&sync=$NeedSync">$(tostr(j))</a>
               <span class="current">$(page)</span>
               $for j in range(int(page)+1,int(page)+BackFowrdNums+1):
                 $if j < int(FileCount)/FilPerPage-1:
-                  <a href="photolib?ImgLib=$ImageSrcFolder&&pages=$(tostr(j))">$(tostr(j))</a>
-              <span class="dot">...</span><a href="photolib?ImgLib=$ImageSrcFolder&&?pages=$(tostr(int(FileCount)/FilPerPage-1))&&sync=$NeedSync">$(tostr(int(FileCount)/FilPerPage-1))</a>
+                  <a href="/photolib?ImgLib=$ImageSrcFolder&&pages=$(tostr(j))">$(tostr(j))</a>
+              <span class="dot">...</span><a href="/photolib?ImgLib=$ImageSrcFolder&&?pages=$(tostr(int(FileCount)/FilPerPage-1))&&sync=$NeedSync">$(tostr(int(FileCount)/FilPerPage-1))</a>
             </div>
           </div>
         </div>
