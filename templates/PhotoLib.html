@@ -7,6 +7,10 @@ $ BackFowrdNums = 8
 $ PageWidth = 800
 $ GapWidth = 20
 $ ImgWidth = (PageWidth - GapWidth*3) /2
+$ CurPath = inputdat.extra_data['cur_path']
+$ SubDirs_path = inputdat.extra_data['sub_dirs_path']
+$ SubDirs_name = inputdat.extra_data['sub_dirs_name']
+$ ParentPath = inputdat.extra_data['parent_path']
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0040)file:///F:/work/linux/Sync/PhotoLib.html -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN" class="hb-loaded"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,7 +29,12 @@ $ ImgWidth = (PageWidth - GapWidth*3) /2
             });
             obj.getElementsByTagName("a")[0].style.color = "grey";
       }
-    </script>>
+    </script>
+    <script>
+        function load_img() {
+            
+        }
+    </script>
 
 </head>
 
@@ -109,5 +118,13 @@ $ ImgWidth = (PageWidth - GapWidth*3) /2
 <a href="http:www.wtear.com"> Powerd by zzl 2016-1-9</a>
 
 </div>
+<div class="folder_navigate" style="">
+    <div class="wraper">
+        <a href="/photolib?ImgLib=$ParentPath&&?pages=$(tostr(int(FileCount)/FilPerPage-1))&&sync=$NeedSync">../</a>
+        $for idx,sub_dir in enumerate(SubDirs_path):
+            <a href="/photolib?ImgLib=$sub_dir&&?pages=$(tostr(int(FileCount)/FilPerPage-1))&&sync=$NeedSync">$SubDirs_name[idx]</a>
+    </div>
+</div>
+
 
 </body></html>

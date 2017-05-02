@@ -51,7 +51,7 @@ render = web.template.render( 'templates/', globals={'os': os, 'tostr': tostr, '
 class HomePage:
     def GET(self):
         user_data = web.input(id=[])
-        return ('<a href="http://192.168.8.198:8080/photolib?ImgLib=adult_img&&pages=1&&sync=n">click here</a>')
+        return ('<a href="/photolib?ImgLib=adult_img&&pages=1&&sync=n">click here</a>')
 
 
 class index:
@@ -83,7 +83,34 @@ def ListDir(curdir):
 
 class photolib:
     def GET(self):
-        user_data = web.input(pages=[0], SubHref='photodetail', ImgLib='img', sync='y')
+        extra_dict = dict()
+        tmp_data = web.input()
+        if tmp_data.has_key('ImgLib'):
+            parent_path = os.path.dirname(tmp_data.get('ImgLib'))
+            cur_path = tmp_data.get('ImgLib')
+        else:
+            parent_path = ''
+            cur_path = 'img'
+        print 'cur_path', cur_path
+        # real_cur_path = os.path.join(os.getcwd(), 'static')
+        real_cur_path = os.path.join(os.path.join(os.getcwd(), 'static'), cur_path)
+        extra_dict['cur_path'] = cur_path
+        extra_dict['parent_path'] = parent_path
+        extra_dict['sub_dirs_path'] = list()
+        extra_dict['sub_dirs_name'] = list()
+        if os.path.exists(real_cur_path):
+            sub_items = os.listdir(real_cur_path)
+            sub_items.sort()
+            for sub_item in sub_items:
+                full_path = os.path.join(real_cur_path, sub_item)
+                if os.path.isdir(full_path):
+                    trunc_path = os.path.join(cur_path, sub_item)
+                    extra_dict['sub_dirs_path'].append(trunc_path)
+                    extra_dict['sub_dirs_name'].append(sub_item)
+                    print 'subdir_path:', trunc_path
+                    print 'subdir_name:', sub_item
+
+        user_data = web.input(pages=[0], SubHref='photodetail', ImgLib='img', sync='y', extra_data=extra_dict)
         return render.PhotoLib(user_data)#,globals={'ldir':ListDir}
 
 
