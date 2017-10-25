@@ -30,6 +30,7 @@ def tostr(ints):
 
 def getImgFileName(start,end = -1, folder = None, sync='y'):
     folder = os.path.join('static', folder)
+    print 'get list of [%s]' % folder
     return FileListSync().get_file_list(folder, start, end)
     ret = []
     if not folder:

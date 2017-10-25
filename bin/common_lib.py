@@ -180,6 +180,7 @@ class FileListSync:
                     tmp_folder_list.append(line[:-1])
                 if i >= end:
                     return tmp_folder_list
+        print 'Total [%d] start[%d] end[%d]' % (len(tmp_folder_list), start, end)
         return tmp_folder_list
         pass
 
