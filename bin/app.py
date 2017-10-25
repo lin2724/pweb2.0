@@ -5,6 +5,7 @@ import re
 import weibo_token
 from common_lib import FileListSync
 from syncFileList import syncFileListBuilder
+from common_lib import ThumbnailHandle
 
 token_store_file = 'token.db'
 
@@ -46,7 +47,12 @@ def getImgFileName(start,end = -1, folder = None, sync='y'):
     tmp = syncHandler.getSpecificFile(start, end)
     return tmp
 
-render = web.template.render( 'templates/', globals={'os': os, 'tostr': tostr, 'getImgFileName': getImgFileName})
+
+def getImgThumbName(orig_file_path):
+    return ThumbnailHandle().get_thumbnail_path(orig_file_path)
+
+
+render = web.template.render( 'templates/', globals={'os': os, 'tostr': tostr, 'getImgFileName': getImgFileName, 'getImgThumbName':getImgThumbName})
 
 
 class HomePage:

@@ -1,6 +1,9 @@
 import os
 import imghdr
 import time
+import PIL
+from PIL import Image
+
 class ConColor:
     pass
 
@@ -182,6 +185,42 @@ class FileListSync:
                     return tmp_folder_list
         print 'Total [%d] start[%d] end[%d]' % (len(tmp_folder_list), start, end)
         return tmp_folder_list
+        pass
+
+
+class ThumbnailHandle:
+    def __init__(self):
+        pass
+
+    def get_thumbnail_path(self, orig_path):
+        parent_folder = os.path.dirname(orig_path)
+        if not len(parent_folder) or '/' == parent_folder or '\\' == parent_folder:
+            return orig_path
+        dst_folder = os.path.join(parent_folder, 'thumb')
+        dst_folder = os.path.join('static', dst_folder)
+        orig_file_path = os.path.join('static', orig_path)
+        if not os.path.exists(dst_folder):
+            try:
+                os.mkdir(dst_folder)
+            except OSError:
+                print 'sys Failed to mkdir [%s]' % dst_folder
+                return orig_path
+        file_name = os.path.basename(orig_path)
+        tail  = file_name.split('.')[-1:][0]
+        dst_file_name = file_name + 'thumb.' + tail
+        dst_file_path = os.path.join(dst_folder, dst_file_name)
+        if not os.path.exists(dst_file_path):
+            try:
+                self.generate_thumb_pic(orig_file_path, dst_file_path)
+            except:
+                return orig_path
+        return os.path.join('thumb', dst_file_name)
+        pass
+
+    def generate_thumb_pic(self, from_file_path, dst_file_path):
+        im = Image.open(from_file_path)
+        im.thumbnail((1024,370))
+        im.save(dst_file_path, "JPEG")
         pass
 
 if __name__ == '__main__':
