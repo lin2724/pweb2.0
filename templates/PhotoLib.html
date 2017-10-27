@@ -90,7 +90,8 @@ $ ParentPath = inputdat.extra_data['parent_path']
                       <a style="color: red; font-size: 80px; position: absolute; top: 40px; ">X</a>
                   </div>
                   <a target="_blank" href="/$Suburl?ImgLib=$ImageSrcFolder&&name=$i&&sync=$NeedSync" >
-                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$i" style="position: relative;">
+                      $ thumb_pic_path = getImgThumbName(ImageSrcFolder + '/' + i)
+                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$thumb_pic_path" style="position: relative;">
                   </a>
               </div>
           </div>
