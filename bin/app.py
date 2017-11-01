@@ -10,6 +10,8 @@ from common_lib import ThumbnailHandle
 token_store_file = 'token.db'
 
 
+gSetNoThumbPic = True
+
 urls = ('/img','index',
          "/photolib/*", "photolib",
          '/photodetail/*','photolib_sub',
@@ -49,6 +51,9 @@ def getImgFileName(start,end = -1, folder = None, sync='y'):
 
 
 def getImgThumbName(orig_file_path):
+    global gSetNoThumbPic
+    if gSetNoThumbPic:
+        return orig_file_path
     return ThumbnailHandle().get_thumbnail_path(orig_file_path)
 
 
