@@ -3,9 +3,15 @@ import imghdr
 import time
 import PIL
 from PIL import Image
+import threading
+import datetime
+
 
 class ConColor:
+    def __init__(self):
+        pass
     pass
+
 
 class LogInfo:
     def __init__(self):
@@ -25,10 +31,94 @@ class LogInfo:
     pass
 
 
+class FolderItem:
+    def __init__(self, path):
+        self.path = path[:]
+        self.last_sync_date = datetime.datetime.now()
+        self.set_sync_period = -1
+        self.set_fresh = False
+        self.set_force_fresh = False
+        pass
+
+
 class FileListSync:
     def __init__(self):
         self.list_file_store_file = 'filelist.log'
         self.list_folder_store_file = 'folderlist.log'
+
+        self.set_sync_period_s = 30
+        self.set_thread_run_period = 5
+
+        self.lock = threading.RLock()
+        self.info_monitor_folder_list = list([FolderItem('')])
+
+        self.flag_sync_thread_running = False
+        self.do_init()
+        pass
+
+    def do_init(self):
+        # delete
+        self.info_monitor_folder_list = list()
+        pass
+
+    def run_sync_thread(self):
+        if self.flag_sync_thread_running:
+            return
+        pro = threading.Thread(target=self.sync_folder_thread)
+        pro.start()
+        pass
+
+    def sync_folder_thread(self):
+        self.flag_sync_thread_running = True
+        self.lock.acquire()
+        for item_folder in self.info_monitor_folder_list:
+            now_time = datetime.datetime.now()
+            time_dlt = now_time - item_folder.last_sync_date
+            time_dlt = datetime.timedelta()
+            if not item_folder.set_fresh:
+                continue
+            if time_dlt.total_seconds() > item_folder.set_sync_period\
+                or item_folder.set_force_fresh:
+                self.sync_file_list(item_folder.path)
+                item_folder.set_force_fresh = False
+                item_folder.set_fresh = False
+                item_folder.last_sync_date = datetime.datetime.now()
+                pass
+        self.lock.release()
+        self.flag_sync_thread_running = False
+        pass
+
+    def add_folder_to_sync(self, folder_path, period=-1):
+        flag_found = False
+        set_period = period
+        if -1 == set_period:
+            set_period = self.set_sync_period_s
+        self.lock.acquire()
+        for item_folder in self.info_monitor_folder_list:
+            if folder_path == item_folder.path:
+                item_folder.set_fresh = True
+                item_folder.set_sync_period = set_period
+                flag_found = True
+                print 'Set folder in sync list [%s]' % folder_path
+                break
+        if not flag_found:
+            item_folder = FolderItem(folder_path)
+            item_folder.set_sync_period = set_period
+            # set force fresh, because we never see this folder before, sync it ASAP
+            item_folder.set_force_fresh = True
+            self.info_monitor_folder_list.append(item_folder)
+            print 'Add folder to sync list [%s]' % folder_path
+        self.lock.release()
+        self.run_sync_thread()
+        pass
+
+    def delete_folder_from_sync(self, folder_path):
+        self.lock.acquire()
+        for idx, item_folder in enumerate(self.info_monitor_folder_list):
+            if folder_path == item_folder.path:
+                self.info_monitor_folder_list.pop(idx)
+                break
+        self.lock.release()
         pass
 
     def sync_file_list(self, folder_name):
@@ -49,13 +139,13 @@ class FileListSync:
         list_folder_store_file_path = os.path.join(folder_full_path, self.list_folder_store_file)
         scan_result_folders = list()
         base_path_len = len(folder_full_path)
-        if os.path.exists(os.path.join(folder_full_path, self.list_file_store_file)):
+        if os.path.exists(os.path.join(folder_full_path, self.list_file_store_file)) and False:
             log_file_ctime = os.stat(os.path.join(folder_full_path, self.list_file_store_file)).st_mtime
             if os.stat(folder_full_path).st_mtime < log_file_ctime + 300:
                 LogInfo().info_show('folder for file-list no need sync %s' % folder_full_path)
                 return
             LogInfo().info_show('dir time %d, file time %d' %(os.stat(folder_full_path).st_mtime, log_file_ctime))
-        LogInfo().info_show('folder need sync %s' % folder_full_path)
+        LogInfo().info_show('Start sync %s' % folder_full_path)
         for (dirpath, dirnames, filenames) in os.walk(folder_full_path, topdown=True):
             tmp_store_file_list_path = os.path.join(dirpath, self.list_file_store_file)
             with open(tmp_store_file_list_path, 'w+') as fd:
@@ -177,12 +267,12 @@ class FileListSync:
                 for i, line in enumerate(fd):
                     if i >= start:
                         tmp_folder_list.append(line[:-1])
-                return tmp_folder_list
-            for i, line in enumerate(fd):
-                if start <= i <= end:
-                    tmp_folder_list.append(line[:-1])
-                if i >= end:
-                    return tmp_folder_list
+            else:
+                for i, line in enumerate(fd):
+                    if start <= i <= end:
+                        tmp_folder_list.append(line[:-1])
+                    if i >= end:
+                        break
         print 'Total [%d] start[%d] end[%d]' % (len(tmp_folder_list), start, end)
         return tmp_folder_list
         pass

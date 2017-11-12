@@ -12,6 +12,8 @@ token_store_file = 'token.db'
 
 gSetNoThumbPic = True
 
+gFileSyncHandler = FileListSync()
+
 urls = ('/img','index',
          "/photolib/*", "photolib",
          '/photodetail/*','photolib_sub',
@@ -34,7 +36,9 @@ def tostr(ints):
 def getImgFileName(start,end = -1, folder = None, sync='y'):
     folder = os.path.join('static', folder)
     print 'get list of [%s]' % folder
-    return FileListSync().get_file_list(folder, start, end)
+    if sync == 'y':
+        gFileSyncHandler.add_folder_to_sync(folder)
+    return gFileSyncHandler.get_file_list(folder, start, end)
     ret = []
     if not folder:
         print 'ERR no folder given'
@@ -135,7 +139,7 @@ class ListFolder:
     def GET(self):
         print os.getcwd()
         folders = list()
-        folders = FileListSync().get_folder_list('static', 0, 100)
+        folders = gFileSyncHandler.get_folder_list('static', 0, 100)
         user_data = web.input(pages=[0], folder_list=folders)
         return render.folder_list(user_data)#,globals={'ldir':ListDir}
 
