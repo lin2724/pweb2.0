@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 import imghdr
 import time
@@ -152,10 +153,13 @@ class FileListSync:
         LogInfo().info_show('Start sync %s' % folder_full_path)
         for (dirpath, dirnames, filenames) in os.walk(folder_full_path, topdown=True):
             tmp_store_file_list_path = os.path.join(dirpath, self.list_file_store_file)
-            with open(tmp_store_file_list_path, 'w+') as fd:
+            with open(tmp_store_file_list_path, 'wb+') as fd:
                 for filename in filenames:
                     if filename != self.list_file_store_file:
-                        fd.write(filename + '\n')
+                        try:
+                            fd.write(filename + '\n')
+                        except UnicodeEncodeError:
+                            pass
             break
 
     def sync_file_list_recursive(self, folder_name=''):
