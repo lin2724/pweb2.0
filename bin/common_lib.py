@@ -2,7 +2,11 @@ import os
 import imghdr
 import time
 import PIL
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    print 'PIL Module not found, use pip install Pillow'
+    exit(1)
 import threading
 import datetime
 

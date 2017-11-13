@@ -152,6 +152,8 @@ class PhotoDelete:
         if user_data.has_key('file'):
             file_name = user_data.get('file')
             file_name = os.path.normpath(file_name)
+            if file_name.startswith('/'):
+                file_name = file_name[1:]
             full_file_path = os.path.join(os.getcwd(), file_name)
             print 'delete %s ' % full_file_path
             try:
