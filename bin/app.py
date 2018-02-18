@@ -5,6 +5,7 @@ import re
 import weibo_token
 from common_lib import FileListSync
 from syncFileList import syncFileListBuilder
+from speech_interface import do_speech
 
 token_store_file = 'token.db'
 
@@ -16,6 +17,7 @@ urls = ('/img','index',
         '/auth','weibo_auth',
         '/gettoken','givetoken',
         '/delete.asp','PhotoDelete',
+        '/speech/','Speech',
         '/*','HomePage',
         )#,('/xxx','index2'
 
@@ -177,6 +179,17 @@ class givetoken:
             else:
                 return ('<h1>Permission denied !</h1>')
         return ('<h1>Permission denied !</h1>')
+
+class Speech:
+    def GET(self):
+        user_data = web.input()
+        if user_data.has_key('text'):
+            print user_data['text']
+            do_speech(user_data['text'], 'static/audio')
+        return render.text_speech()#,globals={'ldir':ListDir}
+        pass
+
+
 app = web.application(urls, globals())
 if __name__=="__main__":
     changeWorkPath()
