@@ -6,11 +6,11 @@ import re
 import weibo_token
 from common_lib import FileListSync
 from syncFileList import syncFileListBuilder
-<<<<<<< HEAD
+
 from speech_interface import do_speech
-=======
+
 from common_lib import ThumbnailHandle
->>>>>>> 71360f0e875a1c39c5e9b563ac7a940f24226b31
+
 
 token_store_file = 'token.db'
 
