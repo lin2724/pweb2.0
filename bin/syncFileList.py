@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import print_function
 import os
 import imghdr
@@ -5,7 +6,7 @@ import imghdr
 ListStoreFile = 'filelist.log'
 
 
-def GetSpecificLine(start, end = -1, folder = './'):
+def GetSpecificLine(start, end=-1, folder='./'):
     with open(os.path.join(folder,ListStoreFile), 'r') as fd:
         tmp = []
         if end == -1:

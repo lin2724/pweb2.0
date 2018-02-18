@@ -1,3 +1,4 @@
+# coding=utf-8
 import web
 import os
 import sys
@@ -5,10 +6,18 @@ import re
 import weibo_token
 from common_lib import FileListSync
 from syncFileList import syncFileListBuilder
+<<<<<<< HEAD
 from speech_interface import do_speech
+=======
+from common_lib import ThumbnailHandle
+>>>>>>> 71360f0e875a1c39c5e9b563ac7a940f24226b31
 
 token_store_file = 'token.db'
 
+
+gSetNoThumbPic = True
+
+gFileSyncHandler = FileListSync()
 
 urls = ('/img','index',
          "/photolib/*", "photolib",
@@ -32,7 +41,10 @@ def tostr(ints):
 
 def getImgFileName(start,end = -1, folder = None, sync='y'):
     folder = os.path.join('static', folder)
-    return FileListSync().get_file_list(folder, start, end)
+    print 'get list of [%s]' % folder
+    if sync == 'y':
+        gFileSyncHandler.add_folder_to_sync(folder)
+    return gFileSyncHandler.get_file_list(folder, start, end)
     ret = []
     if not folder:
         print 'ERR no folder given'
@@ -47,7 +59,15 @@ def getImgFileName(start,end = -1, folder = None, sync='y'):
     tmp = syncHandler.getSpecificFile(start, end)
     return tmp
 
-render = web.template.render( 'templates/', globals={'os': os, 'tostr': tostr, 'getImgFileName': getImgFileName})
+
+def getImgThumbName(orig_file_path):
+    global gSetNoThumbPic
+    if gSetNoThumbPic:
+        return orig_file_path
+    return ThumbnailHandle().get_thumbnail_path(orig_file_path)
+
+
+render = web.template.render( 'templates/', globals={'os': os, 'tostr': tostr, 'getImgFileName': getImgFileName, 'getImgThumbName':getImgThumbName})
 
 
 class HomePage:
@@ -125,7 +145,7 @@ class ListFolder:
     def GET(self):
         print os.getcwd()
         folders = list()
-        folders = FileListSync().get_folder_list('static', 0, 100)
+        folders = gFileSyncHandler.get_folder_list('static', 0, 100)
         user_data = web.input(pages=[0], folder_list=folders)
         return render.folder_list(user_data)#,globals={'ldir':ListDir}
 
@@ -138,6 +158,8 @@ class PhotoDelete:
         if user_data.has_key('file'):
             file_name = user_data.get('file')
             file_name = os.path.normpath(file_name)
+            if file_name.startswith('/'):
+                file_name = file_name[1:]
             full_file_path = os.path.join(os.getcwd(), file_name)
             print 'delete %s ' % full_file_path
             try:

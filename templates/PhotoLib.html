@@ -70,26 +70,28 @@ $ ParentPath = inputdat.extra_data['parent_path']
           <div class="catlog_left" style="width:$(ImgWidth)px;margin-left:$(GapWidth)px">
           $ page = inputdat.pages[0]
           $ FileCount = len(getImgFileName(0,-1,ImageSrcFolder, NeedSync))
-          $for i in getImgFileName(int(page)* FilPerPage+1,int(page)* FilPerPage + FilPerPage/2, ImageSrcFolder, NeedSync):
+          $for i in getImgFileName(int(page)* FilPerPage, int(page)* FilPerPage + FilPerPage/2, ImageSrcFolder, NeedSync):
               <div class="e m">
                   <div onclick="click_delete(this)" style="cursor: pointer; width: 80px; height: 80px; visibility: hidden; position: absolute; top: 0; right: 0;z-index: 100; visibility: visible">
                       <a style="color: red; font-size: 80px; position: absolute; top: 40px; ">X</a>
                   </div>
                   <a target="_blank" href="/$Suburl?ImgLib=$ImageSrcFolder&&name=$i&&sync=$NeedSync" >
-                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$i" style="position: relative;">
+                      $ thumb_pic_path = getImgThumbName(ImageSrcFolder + '/' + i)
+                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$thumb_pic_path" style="position: relative;">
                   </a>
               </div>
           </div>
           <div class="catlog_right" style="width:$(ImgWidth)px;margin-right:$(GapWidth)px">
           $ page = inputdat.pages[0]
           $ FileCount = len(getImgFileName(0, -1, ImageSrcFolder, NeedSync))
-          $for i in getImgFileName(int(page)* FilPerPage + FilPerPage/2 +1,int(page)* FilPerPage + FilPerPage, ImageSrcFolder, NeedSync):
+          $for i in getImgFileName(int(page)* FilPerPage + FilPerPage/2 +1, int(page)* FilPerPage + FilPerPage -1, ImageSrcFolder, NeedSync):
               <div class="e m">
                   <div onclick="click_delete(this)" style="cursor: pointer; width: 80px; height: 80px; visibility: hidden; position: absolute; top: 0; right: 0;z-index: 100; visibility: visible">
                       <a style="color: red; font-size: 80px; position: absolute; top: 40px; ">X</a>
                   </div>
                   <a target="_blank" href="/$Suburl?ImgLib=$ImageSrcFolder&&name=$i&&sync=$NeedSync" >
-                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$ImageSrcFolder/$i" style="position: relative;">
+                      $ thumb_pic_path = getImgThumbName(ImageSrcFolder + '/' + i)
+                      <img class="img ui-draggable" alt="untitled" width="$ImgWidth px" src="/static/$thumb_pic_path" style="position: relative;">
                   </a>
               </div>
           </div>
