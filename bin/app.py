@@ -206,7 +206,7 @@ class Speech:
     def GET(self):
         user_data = web.input()
         if user_data.has_key('text'):
-            print user_data['text']
+            # print user_data['text']
             do_speech(user_data['text'], 'static/audio')
         return render.text_speech()#,globals={'ldir':ListDir}
         pass
