@@ -4,12 +4,12 @@ import os
 import sys
 import re
 import weibo_token
-from common_lib import FileListSync
+from util_lib import FileListSync
 from syncFileList import syncFileListBuilder
 
 from speech_interface import do_speech
 
-from common_lib import ThumbnailHandle
+from util_lib import ThumbnailHandle
 
 
 token_store_file = 'token.db'
