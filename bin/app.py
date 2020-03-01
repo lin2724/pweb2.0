@@ -3,10 +3,11 @@ import web
 import os
 import sys
 import re
+import json
 import weibo_token
 from util_lib import FileListSync
 from syncFileList import syncFileListBuilder
-
+from util_lib import check_if_ip_online
 from speech_interface import do_speech
 
 from util_lib import ThumbnailHandle
@@ -27,6 +28,7 @@ urls = ('/img','index',
         '/gettoken','givetoken',
         '/delete.asp','PhotoDelete',
         '/speech/','Speech',
+        '/checkiponline','CheckIpOnline',
         '/*','HomePage',
         )#,('/xxx','index2'
 
@@ -209,6 +211,25 @@ class Speech:
             # print user_data['text']
             do_speech(user_data['text'], 'static/audio')
         return render.text_speech()#,globals={'ldir':ListDir}
+        pass
+
+
+class CheckIpOnline:
+    def GET(self):
+        ret_info = dict()
+        user_data = web.input()
+        if user_data.has_key('ip') and user_data.has_key('port'):
+            ret = check_if_ip_online(user_data['ip'], user_data['port'])
+            if ret:
+                ret_info["status"] = "succeed"
+            else:
+                ret_info["status"] = "false"
+            ret_info['addr'] = user_data['ip'] + ":" + user_data['port']
+            ret_info["info"] = "none"
+        else:
+            ret_info["status"] = "false"
+            ret_info["info"] = "Wrong method"
+        return json.dumps(ret_info)
         pass
 
 

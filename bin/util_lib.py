@@ -2,6 +2,7 @@
 import os
 import imghdr
 import time
+import socket
 import PIL
 try:
     from PIL import Image
@@ -335,6 +336,17 @@ class RemoteTaskInfo:
         pass
 
 
+def check_if_ip_online(url, port):
+    ret = True
+    adar = (url, port)
+    sock = None
+    try:
+        sock = socket.create_connection(adar, timeout=3)
+    except:
+        ret = False
+    if not sock:
+        sock.close()
+    return ret
 
 
 if __name__ == '__main__':
