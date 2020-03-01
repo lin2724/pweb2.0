@@ -4,10 +4,12 @@ import os
 import sys
 import re
 import json
+import requests
 import weibo_token
 from util_lib import FileListSync
 from syncFileList import syncFileListBuilder
 from util_lib import check_if_ip_online
+from util_lib import pack_jsonp_str
 from speech_interface import do_speech
 
 from util_lib import ThumbnailHandle
@@ -29,6 +31,9 @@ urls = ('/img','index',
         '/delete.asp','PhotoDelete',
         '/speech/','Speech',
         '/checkiponline','CheckIpOnline',
+        '/pcpower','PcPower',
+        '/JsonpApi', 'JsonpTest',
+        '/JsonpApi/checkiponline', 'JsonpCheckIpOnline',
         '/*','HomePage',
         )#,('/xxx','index2'
 
@@ -219,7 +224,7 @@ class CheckIpOnline:
         ret_info = dict()
         user_data = web.input()
         if user_data.has_key('ip') and user_data.has_key('port'):
-            ret = check_if_ip_online(user_data['ip'], user_data['port'])
+            ret = check_if_ip_online(str(user_data['ip']), int(user_data['port']))
             if ret:
                 ret_info["status"] = "succeed"
             else:
@@ -232,6 +237,52 @@ class CheckIpOnline:
         return json.dumps(ret_info)
         pass
 
+
+class PcPower:
+    def GET(self):
+        ret_info = dict()
+        url = 'http://192.168.22.5/device/io?io=1&status=off&time_ms=500'
+        try:
+            ret = requests.get(url)
+            # ret = requests.request(method='GET', url=url)
+            if 200 == ret.status_code:
+                ret_info["status"] = "succeed"
+            else:
+                ret_info["status"] = "false"
+                ret_info["info"] = ret.content
+        except requests.HTTPError or requests.exceptions.ConnectionError:
+            ret_info["status"] = "false"
+            ret_info["info"] = 'Connect Failed'
+        return json.dumps(ret_info)
+        pass
+
+
+class JsonpCheckIpOnline:
+    def GET(self):
+        user_data = web.input()
+        if not user_data.has_key("function"):
+            return 'console.log("Wrong param")'
+        if user_data.has_key('ip') and user_data.has_key('port'):
+            ret = check_if_ip_online(str(user_data['ip']), int(user_data['port']))
+            if ret:
+                status = "succeed"
+                info = "None"
+            else:
+                status = "false"
+                info = "Not Online"
+        else:
+            status = "false"
+            info = 'wrong param'
+        return pack_jsonp_str(user_data['function'], status, info)
+
+class JsonpTest:
+    def GET(self):
+        user_data = web.input()
+        if user_data.has_key("function"):
+            return str(user_data['function']) + '("' + "may be is ok" + '")'
+        else:
+            return 'alert("fuck server get failed");'
+        pass
 
 app = web.application(urls, globals())
 if __name__=="__main__":

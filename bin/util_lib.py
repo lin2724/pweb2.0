@@ -342,11 +342,17 @@ def check_if_ip_online(url, port):
     sock = None
     try:
         sock = socket.create_connection(adar, timeout=3)
-    except:
+        # print "Succeed connect [%s]" % str(adar)
+    except socket.error:
         ret = False
-    if not sock:
-        sock.close()
+        # print "Failed connect [%s]" % str(adar)
+    # if not sock:
+        #sock.close()
     return ret
+
+
+def pack_jsonp_str(func, status, info):
+    return str(func) + '("' + status + '","' + info + '")'
 
 
 if __name__ == '__main__':
